@@ -61,6 +61,9 @@ body {
 .search-result img {
   height: 150px;
 }
+img{
+    max-width: none;
+}
 .search-result > div span {
   font-size: 20px;
   padding: 10px;
@@ -88,6 +91,7 @@ body {
   border-top-right-radius: 4px;
   position: relative;
   top: -1px;
+  padding: 0 10px;
 }
 .main {
   width: 70%;
@@ -188,3 +192,9 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .img{
+   @apply max-w-none;
+  }
+}
