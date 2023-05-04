@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { legacy_createStore as createStore } from 'redux';
-import movies from './reducers/index'
+import rootReducer from './reducers/index'
 
+// ADDDING STORE TO APPLICATION
 //passing reducer to createStore
-const store = createStore(movies);
-console.log('store :',store.getState());
+const store = createStore(rootReducer);
+console.log('store :',store.getState());  
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

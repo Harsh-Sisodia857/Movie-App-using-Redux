@@ -4,39 +4,41 @@ import { data } from './data'
 import MovieCard from './component/MovieCard';
 import { addMovies, showFavourite } from './actions';
 
-class App extends React.Component{
-  componentDidMount() { 
+class App extends React.Component {
+  componentDidMount() {
     const { store } = this.props;
+    // WHEN WE DISPATCH AN ACTION SUBSCRIBE WILL BE CALLED
     store.subscribe(() => {
       console.log("Updated");
       this.forceUpdate();
     })
     //make api call
-    
-    // dispatch action
+
+    // dispatch action. CALLING ACTION CREATOR (CREATES AN ACTION)
     store.dispatch(addMovies(data))
-    console.log("State : ",this.props.store.getState())
+    console.log("State : ", this.props.store.getState())
   }
 
   isMovieFavourite = (movie) => {
-    const { favourites } = this.props.store.getState();
-    const index = favourites.indexOf(movie);
+    const { movies } = this.props.store.getState();
+    const index = movies.favourites.indexOf(movie);
     if (index !== -1) {
       return false;
     }
     else {
       return true;
-    }
+    } 
   }
 
   changeTab = (val) => {
     const { store } = this.props;
-     store.dispatch(showFavourite(val))
+    store.dispatch(showFavourite(val))
   }
-  
+
   render() {
-    const { list: movies, favourites, showFavourite } = this.props.store.getState();
-    const displayMovie = showFavourite ? favourites : movies;
+    const { movies } = this.props.store.getState();
+    const { list, favourites, showFavourite } = movies;
+    const displayMovie = showFavourite ? favourites : list;
     return (
       <div className="App">
         <Navbar />
@@ -48,7 +50,11 @@ class App extends React.Component{
           <div className="list my-5">
             {
               displayMovie.map((movie, index) => {
-                return < MovieCard movie={movie} key={`movie-${index}`} dispatch={this.props.store.dispatch} getState={this.props.store.getState} isFavourite={ this.isMovieFavourite(movie)} />
+                return < MovieCard movie={movie}
+                  key={`movie-${index}`}
+                  dispatch={this.props.store.dispatch}
+                  getState={this.props.store.getState}
+                  isFavourite={this.isMovieFavourite(movie)} />
               })
             }
             {
@@ -57,7 +63,7 @@ class App extends React.Component{
           </div>
         </div>
       </div>
-  );
+    );
   }
 }
 
